@@ -1,0 +1,15 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/*.csv
+results/llm_raw_response.txt
+
+# local notes
+beyond-automl.tgz
+Acesso ao AutoML_Book.pdf.md
+Captura de tela*.png
+_to_delete/
+Acesso ao AutoML_Book.pdf.pt.md
+.ipynb_checkpoints/

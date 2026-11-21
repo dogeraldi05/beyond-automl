@@ -1,0 +1,172 @@
+{
+  "source": "offline cache",
+  "note": "Example LLM response, kept on purpose with typical mistakes (hallucination, implausible value, bias, undeclared leakage) to demonstrate the guardrails",
+  "model": "example",
+  "problems": [
+    {
+      "id": "churn",
+      "problem": "Predict churn",
+      "objective": "Identify customers at high risk of cancelling to offer retention",
+      "target": {
+        "column": "Churn",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 400,
+      "cost_per_action_brl": 50,
+      "impact_score": 9,
+      "difficulty": 4
+    },
+    {
+      "id": "fiber_upsell",
+      "problem": "Fiber upsell",
+      "objective": "Find internet customers with a fiber-subscriber profile to offer an upgrade",
+      "target": {
+        "column": "InternetService",
+        "operator": "in",
+        "values": [
+          "Fiber optic"
+        ]
+      },
+      "population": {
+        "column": "InternetService",
+        "operator": "not_in",
+        "values": [
+          "No"
+        ]
+      },
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 300,
+      "cost_per_action_brl": 20,
+      "impact_score": 8,
+      "difficulty": 3
+    },
+    {
+      "id": "long_contract",
+      "problem": "Move to annual or two-year contract",
+      "objective": "Find customers with a long-contract profile to offer loyalty plans",
+      "target": {
+        "column": "Contract",
+        "operator": "not_in",
+        "values": [
+          "Month-to-month"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 250,
+      "cost_per_action_brl": 30,
+      "impact_score": 7,
+      "difficulty": 3
+    },
+    {
+      "id": "support_cross_sell",
+      "problem": "Tech support cross-sell",
+      "objective": "Offer the tech support package to customers likely to buy it",
+      "target": {
+        "column": "TechSupport",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": {
+        "column": "InternetService",
+        "operator": "not_in",
+        "values": [
+          "No"
+        ]
+      },
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 120,
+      "cost_per_action_brl": 10,
+      "impact_score": 6,
+      "difficulty": 3
+    },
+    {
+      "id": "auto_payment",
+      "problem": "Automatic payment adoption",
+      "objective": "Reduce default risk by moving customers to automatic payment",
+      "target": {
+        "column": "PaymentMethod",
+        "operator": "in",
+        "values": [
+          "Bank transfer (automatic)",
+          "Credit card (automatic)"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 80,
+      "cost_per_action_brl": 5,
+      "impact_score": 5,
+      "difficulty": 2
+    },
+    {
+      "id": "payment_default",
+      "problem": "Predict payment default",
+      "objective": "Anticipate customers who will stop paying their bill",
+      "target": {
+        "column": "PaymentDefault",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 500,
+      "cost_per_action_brl": 15,
+      "impact_score": 9,
+      "difficulty": 5
+    },
+    {
+      "id": "complaints",
+      "problem": "Predict support complaints",
+      "objective": "Anticipate customers who will open a complaint",
+      "target": {
+        "column": "NumComplaints",
+        "operator": "gt",
+        "values": [
+          0
+        ]
+      },
+      "population": null,
+      "leakage_columns": [],
+      "metric": "F1",
+      "value_per_hit_brl": 200,
+      "cost_per_action_brl": 10,
+      "impact_score": 6,
+      "difficulty": 5
+    },
+    {
+      "id": "senior_plan",
+      "problem": "Premium plan for seniors",
+      "objective": "Identify senior customers for a dedicated premium plan",
+      "target": {
+        "column": "SeniorCitizen",
+        "operator": "in",
+        "values": [
+          1
+        ]
+      },
+      "population": null,
+      "leakage_columns": [],
+      "metric": "AUC",
+      "value_per_hit_brl": 50000,
+      "cost_per_action_brl": 20,
+      "impact_score": 10,
+      "difficulty": 2
+    }
+  ]
+}

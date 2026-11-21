@@ -1,0 +1,31 @@
+# beyond-automl experiment configuration
+data_path: data/telco_churn.csv
+data_url: https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv
+
+# Scale assumption: test-set results are extrapolated to this customer base
+customer_base: 1000000
+
+# How many approved problems go on to modeling (highest impact_score first)
+max_problems: 5
+
+split:
+  test_size: 0.25
+  random_state: 42
+
+llm:
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+  # can be overridden by the OPENROUTER_MODEL environment variable
+  model: openrouter/auto
+  n_problems: 8
+  cache_path: problems/llm_problems_cache.json
+
+guardrails:
+  min_prevalence: 0.03          # targets with less than 3% positives are rejected
+  max_prevalence: 0.97
+  min_positives: 100
+  leakage_auc: 0.95             # single-feature AUC above this = leakage
+  suspicious_model_auc: 0.98    # model AUC above this = alert
+  max_value_arpu_months: 24     # value per hit cannot exceed 24 months of ARPU
+  fairness_max_recall_gap: 0.10
+  sensitive_columns: [gender, SeniorCitizen]

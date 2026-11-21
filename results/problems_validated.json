@@ -1,0 +1,727 @@
+[
+  {
+    "id": "churn_overall",
+    "problem": "Overall churn prediction",
+    "objective": "Identify customers most likely to churn so retention offers can be prioritized.",
+    "target": {
+      "column": "Churn",
+      "operator": "in",
+      "values": [
+        "Yes"
+      ]
+    },
+    "population": null,
+    "leakage_columns": [
+      "customerID",
+      "Churn"
+    ],
+    "metric": "AUC",
+    "value_per_hit_brl": 1200,
+    "cost_per_action_brl": 50,
+    "impact_score": 10,
+    "difficulty": 6,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 1,200 ≤ cap BRL 1,554; cost BRL 50 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 26.5%, 1869 positives out of 7043 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.2653698707936959,
+    "n_population": 7043
+  },
+  {
+    "id": "churn_month_to_month",
+    "problem": "Month-to-month churn prediction",
+    "objective": "Predict churn among month-to-month customers to reduce early contract losses.",
+    "target": {
+      "column": "Churn",
+      "operator": "in",
+      "values": [
+        "Yes"
+      ]
+    },
+    "population": {
+      "column": "Contract",
+      "operator": "in",
+      "values": [
+        "Month-to-month"
+      ]
+    },
+    "leakage_columns": [
+      "customerID",
+      "Churn"
+    ],
+    "metric": "Recall",
+    "value_per_hit_brl": 1000,
+    "cost_per_action_brl": 45,
+    "impact_score": 9,
+    "difficulty": 5,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 1,000 ≤ cap BRL 1,554; cost BRL 45 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 42.7%, 1655 positives out of 3875 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.4270967741935484,
+    "n_population": 3875
+  },
+  {
+    "id": "churn_fiber_optic",
+    "problem": "Fiber optic churn prediction",
+    "objective": "Identify fiber optic customers likely to churn for targeted retention actions.",
+    "target": {
+      "column": "Churn",
+      "operator": "in",
+      "values": [
+        "Yes"
+      ]
+    },
+    "population": {
+      "column": "InternetService",
+      "operator": "in",
+      "values": [
+        "Fiber optic"
+      ]
+    },
+    "leakage_columns": [
+      "customerID",
+      "Churn"
+    ],
+    "metric": "Recall",
+    "value_per_hit_brl": 1500,
+    "cost_per_action_brl": 60,
+    "impact_score": 9,
+    "difficulty": 6,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 1,500 ≤ cap BRL 1,554; cost BRL 60 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 41.9%, 1297 positives out of 3096 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.4189276485788114,
+    "n_population": 3096
+  },
+  {
+    "id": "contract_conversion",
+    "problem": "Annual contract conversion targeting",
+    "objective": "Identify month-to-month customers who should be targeted for annual contract conversion.",
+    "target": {
+      "column": "Contract",
+      "operator": "in",
+      "values": [
+        "Month-to-month"
+      ]
+    },
+    "population": null,
+    "leakage_columns": [
+      "customerID",
+      "Contract",
+      "Churn"
+    ],
+    "metric": "AUC",
+    "value_per_hit_brl": 300,
+    "cost_per_action_brl": 30,
+    "impact_score": 7,
+    "difficulty": 5,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 300 ≤ cap BRL 1,554; cost BRL 30 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 55.0%, 3875 positives out of 7043 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.5501916796819537,
+    "n_population": 7043
+  },
+  {
+    "id": "electronic_check_migration",
+    "problem": "Electronic check migration targeting",
+    "objective": "Identify customers likely using electronic check so they can be migrated to automatic payment.",
+    "target": {
+      "column": "PaymentMethod",
+      "operator": "in",
+      "values": [
+        "Electronic check"
+      ]
+    },
+    "population": null,
+    "leakage_columns": [
+      "customerID",
+      "PaymentMethod",
+      "Churn"
+    ],
+    "metric": "AUC",
+    "value_per_hit_brl": 80,
+    "cost_per_action_brl": 10,
+    "impact_score": 6,
+    "difficulty": 4,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 80 ≤ cap BRL 1,554; cost BRL 10 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 33.6%, 2365 positives out of 7043 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaperlessBilling",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.3357944057929859,
+    "n_population": 7043
+  },
+  {
+    "id": "paperless_billing_adoption",
+    "problem": "Paperless billing adoption targeting",
+    "objective": "Identify customers likely not on paperless billing for paperless adoption campaigns.",
+    "target": {
+      "column": "PaperlessBilling",
+      "operator": "in",
+      "values": [
+        "No"
+      ]
+    },
+    "population": null,
+    "leakage_columns": [
+      "customerID",
+      "PaperlessBilling",
+      "Churn"
+    ],
+    "metric": "AUC",
+    "value_per_hit_brl": 30,
+    "cost_per_action_brl": 5,
+    "impact_score": 5,
+    "difficulty": 3,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 30 ≤ cap BRL 1,554; cost BRL 5 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 40.8%, 2872 positives out of 7043 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.4077807752378248,
+    "n_population": 7043
+  },
+  {
+    "id": "tech_support_upsell",
+    "problem": "Tech support upsell propensity",
+    "objective": "Identify internet customers likely to adopt tech support for add-on sales targeting.",
+    "target": {
+      "column": "TechSupport",
+      "operator": "in",
+      "values": [
+        "Yes"
+      ]
+    },
+    "population": {
+      "column": "InternetService",
+      "operator": "in",
+      "values": [
+        "DSL",
+        "Fiber optic"
+      ]
+    },
+    "leakage_columns": [
+      "customerID",
+      "TechSupport",
+      "Churn"
+    ],
+    "metric": "AUC",
+    "value_per_hit_brl": 100,
+    "cost_per_action_brl": 20,
+    "impact_score": 6,
+    "difficulty": 5,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 100 ≤ cap BRL 1,554; cost BRL 20 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 37.0%, 2044 positives out of 5517 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "PhoneService",
+      "MultipleLines",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.37049120899039334,
+    "n_population": 5517
+  },
+  {
+    "id": "multiple_lines_adoption",
+    "problem": "Multiple lines adoption propensity",
+    "objective": "Identify phone service customers likely to adopt multiple lines for upsell targeting.",
+    "target": {
+      "column": "MultipleLines",
+      "operator": "in",
+      "values": [
+        "Yes"
+      ]
+    },
+    "population": {
+      "column": "PhoneService",
+      "operator": "in",
+      "values": [
+        "Yes"
+      ]
+    },
+    "leakage_columns": [
+      "customerID",
+      "MultipleLines",
+      "Churn"
+    ],
+    "metric": "AUC",
+    "value_per_hit_brl": 60,
+    "cost_per_action_brl": 10,
+    "impact_score": 5,
+    "difficulty": 4,
+    "checks": [
+      {
+        "risk": "Unreliable",
+        "check": "JSON schema",
+        "status": "pass",
+        "detail": "all required fields present"
+      },
+      {
+        "risk": "Hallucinates",
+        "check": "Columns and values exist",
+        "status": "pass",
+        "detail": "target and population verified in the dataset"
+      },
+      {
+        "risk": "Unreliable",
+        "check": "Plausible financial assumptions",
+        "status": "pass",
+        "detail": "value BRL 60 ≤ cap BRL 1,554; cost BRL 10 < value"
+      },
+      {
+        "risk": "Bias",
+        "check": "Sensitive attributes excluded from features",
+        "status": "pass",
+        "detail": "['gender', 'SeniorCitizen'] removed from features; recall gap measured after training"
+      },
+      {
+        "risk": "Complexity",
+        "check": "Prevalence and volume",
+        "status": "pass",
+        "detail": "prevalence 46.7%, 2971 positives out of 6361 customers"
+      },
+      {
+        "risk": "Privacy",
+        "check": "No individual data sent to the LLM",
+        "status": "pass",
+        "detail": "LLM received only the aggregated profile; ['customerID'] removed"
+      },
+      {
+        "risk": "Still learning",
+        "check": "Undeclared leakage",
+        "status": "pass",
+        "detail": "no single variable with AUC ≥ 0.95"
+      }
+    ],
+    "status": "approved",
+    "features": [
+      "Partner",
+      "Dependents",
+      "tenure",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaperlessBilling",
+      "PaymentMethod",
+      "MonthlyCharges",
+      "TotalCharges"
+    ],
+    "prevalence": 0.46706492689828644,
+    "n_population": 6361
+  }
+]

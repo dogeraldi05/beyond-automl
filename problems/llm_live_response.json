@@ -1,0 +1,215 @@
+{
+  "source": "openrouter (live)",
+  "model": "deepseek/deepseek-v4.1-flash-1017",
+  "date": "2026-11-21",
+  "cost_usd": 0.00275234,
+  "total_tokens": 7961,
+  "problems": [
+    {
+      "id": "churn_overall",
+      "problem": "Overall churn prediction",
+      "objective": "Identify customers most likely to churn so retention offers can be prioritized.",
+      "target": {
+        "column": "Churn",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [
+        "customerID",
+        "Churn"
+      ],
+      "metric": "AUC",
+      "value_per_hit_brl": 1200,
+      "cost_per_action_brl": 50,
+      "impact_score": 10,
+      "difficulty": 6
+    },
+    {
+      "id": "churn_month_to_month",
+      "problem": "Month-to-month churn prediction",
+      "objective": "Predict churn among month-to-month customers to reduce early contract losses.",
+      "target": {
+        "column": "Churn",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": {
+        "column": "Contract",
+        "operator": "in",
+        "values": [
+          "Month-to-month"
+        ]
+      },
+      "leakage_columns": [
+        "customerID",
+        "Churn"
+      ],
+      "metric": "Recall",
+      "value_per_hit_brl": 1000,
+      "cost_per_action_brl": 45,
+      "impact_score": 9,
+      "difficulty": 5
+    },
+    {
+      "id": "churn_fiber_optic",
+      "problem": "Fiber optic churn prediction",
+      "objective": "Identify fiber optic customers likely to churn for targeted retention actions.",
+      "target": {
+        "column": "Churn",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": {
+        "column": "InternetService",
+        "operator": "in",
+        "values": [
+          "Fiber optic"
+        ]
+      },
+      "leakage_columns": [
+        "customerID",
+        "Churn"
+      ],
+      "metric": "Recall",
+      "value_per_hit_brl": 1500,
+      "cost_per_action_brl": 60,
+      "impact_score": 9,
+      "difficulty": 6
+    },
+    {
+      "id": "contract_conversion",
+      "problem": "Annual contract conversion targeting",
+      "objective": "Identify month-to-month customers who should be targeted for annual contract conversion.",
+      "target": {
+        "column": "Contract",
+        "operator": "in",
+        "values": [
+          "Month-to-month"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [
+        "customerID",
+        "Contract",
+        "Churn"
+      ],
+      "metric": "AUC",
+      "value_per_hit_brl": 300,
+      "cost_per_action_brl": 30,
+      "impact_score": 7,
+      "difficulty": 5
+    },
+    {
+      "id": "electronic_check_migration",
+      "problem": "Electronic check migration targeting",
+      "objective": "Identify customers likely using electronic check so they can be migrated to automatic payment.",
+      "target": {
+        "column": "PaymentMethod",
+        "operator": "in",
+        "values": [
+          "Electronic check"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [
+        "customerID",
+        "PaymentMethod",
+        "Churn"
+      ],
+      "metric": "AUC",
+      "value_per_hit_brl": 80,
+      "cost_per_action_brl": 10,
+      "impact_score": 6,
+      "difficulty": 4
+    },
+    {
+      "id": "paperless_billing_adoption",
+      "problem": "Paperless billing adoption targeting",
+      "objective": "Identify customers likely not on paperless billing for paperless adoption campaigns.",
+      "target": {
+        "column": "PaperlessBilling",
+        "operator": "in",
+        "values": [
+          "No"
+        ]
+      },
+      "population": null,
+      "leakage_columns": [
+        "customerID",
+        "PaperlessBilling",
+        "Churn"
+      ],
+      "metric": "AUC",
+      "value_per_hit_brl": 30,
+      "cost_per_action_brl": 5,
+      "impact_score": 5,
+      "difficulty": 3
+    },
+    {
+      "id": "tech_support_upsell",
+      "problem": "Tech support upsell propensity",
+      "objective": "Identify internet customers likely to adopt tech support for add-on sales targeting.",
+      "target": {
+        "column": "TechSupport",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": {
+        "column": "InternetService",
+        "operator": "in",
+        "values": [
+          "DSL",
+          "Fiber optic"
+        ]
+      },
+      "leakage_columns": [
+        "customerID",
+        "TechSupport",
+        "Churn"
+      ],
+      "metric": "AUC",
+      "value_per_hit_brl": 100,
+      "cost_per_action_brl": 20,
+      "impact_score": 6,
+      "difficulty": 5
+    },
+    {
+      "id": "multiple_lines_adoption",
+      "problem": "Multiple lines adoption propensity",
+      "objective": "Identify phone service customers likely to adopt multiple lines for upsell targeting.",
+      "target": {
+        "column": "MultipleLines",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "population": {
+        "column": "PhoneService",
+        "operator": "in",
+        "values": [
+          "Yes"
+        ]
+      },
+      "leakage_columns": [
+        "customerID",
+        "MultipleLines",
+        "Churn"
+      ],
+      "metric": "AUC",
+      "value_per_hit_brl": 60,
+      "cost_per_action_brl": 10,
+      "impact_score": 5,
+      "difficulty": 4
+    }
+  ]
+}

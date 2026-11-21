@@ -1,0 +1,12 @@
+pandas>=2.1
+scikit-learn>=1.4
+xgboost>=2.0
+lightgbm>=4.0
+streamlit>=1.50
+plotly>=5.20
+openai>=1.40
+pyyaml>=6.0
+python-dotenv>=1.0
+pytest>=8.0
+matplotlib>=3.8
+jupyterlab>=4.0
